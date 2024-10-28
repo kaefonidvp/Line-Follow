@@ -1,0 +1,56 @@
+#include <stdio.h>
+#include <kipr/botball.h>
+#include <kipr/wombat.h>
+int Rmotor=0;
+int Lmotor=1;
+    // declare motors with variables 
+int count = 0;
+    // delcare functions
+int main()
+{
+    enable_servos();
+   while (1==1)//when robot detects line, stop.
+   {
+   motor(0,30);//forward
+   motor(1,30);
+       if(analog(0)>1700)//sensor sees line
+       {
+        ao();
+           break;
+       }
+         
+   }
+     
+    msleep(1000);//wait 1000ms
+    while (1==1) 
+{
+	    motor(Rmotor,28);  //forward left
+    motor(Lmotor,10);
+   if(analog(0) > 1000)//if the sensor sees the line
+{
+     motor(Rmotor,-28); //robot turns right
+    motor(Lmotor,150);
+}
+ 	if(analog(1)>2800)//if other sensor sees wall
+{
+        ao();
+        msleep(1000);//turn off motors
+        break;
+} 
+}
+msleep(300);   
+    
+while (count <= 5)//wave flag 6 times
+    
+{
+	set_servo_position(1,800);
+    msleep(750);
+	set_servo_position(1,1400);
+    msleep(750);
+    count++;
+
+}
+
+   return 0;//code ends
+}
+
